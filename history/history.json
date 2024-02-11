@@ -1,0 +1,28 @@
+{
+  "historicalPokemonList" : [ {
+    "name" : "Pikachu",
+    "element" : "Electric",
+    "level" : 1
+  }, {
+    "name" : "Гусеница",
+    "element" : "Насекомое",
+    "level" : 9
+  }, {
+    "name" : "Сквиртл",
+    "element" : "Водный",
+    "level" : 10
+  }, {
+    "name" : "Бульбазавр",
+    "element" : "Травяной",
+    "level" : 6
+  }, {
+    "name" : "Пиджеотто",
+    "element" : "Летающий",
+    "level" : 5
+  }, {
+    "name" : "Чармандер",
+    "element" : "Огненый",
+    "level" : 7
+  } ],
+  "totalLevels" : 38
+}

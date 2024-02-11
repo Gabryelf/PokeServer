@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokemon Collection - History</title>
+  <style th:inline="text">
+    body {
+      background-image: url('https://static1.thegamerimages.com/wordpress/wp-content/uploads/2018/08/poke%CC%81mon-art.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      color: #000000;
+      text-align: center;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.7);
+    }
+
+  </style>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+<div class="container">
+  <h1>Game History</h1>
+
+  <div th:if="${historicalResult != null}">
+    <h2>Total Levels: <span th:text="${historicalResult.totalLevels}"></span></h2>
+
+    <h2>Pokemon Collection:</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Element</th>
+        <th>Level</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="pokemon : ${historicalResult.historicalPokemonList}">
+        <td th:text="${pokemon.name}"></td>
+        <td th:text="${pokemon.element}"></td>
+        <td th:text="${pokemon.level}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <a th:href="@{/}" class="back-link">Back to Game</a>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Collection</title>
+    <link rel="stylesheet" href="/css/style.css"/>
+    <style th:inline="text">
+        body {
+            background-image: url('https://w.forfun.com/fetch/47/472f21c94d29fea25e0243566da5ccc8.jpeg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: white;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto; /* Center the container */
+            max-width: 600px; /* Limit the width for better readability */
+        }
+
+        .catch-button[disabled], .rocket-button[disabled] {
+            background-color: gray;
+            color: white;
+        }
+
+        .leaderboard-container {
+            display: none;
+        }
+
+        .leader-name {
+            font-weight: bold;
+            color: yellow; /* Customize the color for leader names */
+        }
+
+        .rocket-button.active {
+            background-color: violet;
+            color: white;
+        }
+
+        .evolution-button {
+            background-color: blue;
+            color: white;
+        }
+
+        .finish-button {
+            background-color: orange;
+            color: white;
+        }
+    </style>
+    <script th:inline="javascript">
+        function catchPokemon() {
+            var rocketButton = document.getElementById('rocketButton');
+            var catchButton = document.querySelector('.catch-button');
+
+            // Randomly decide if Rocket effect should be applied
+            if (Math.floor(Math.random() * 3) === 0) {
+                // Randomly decide if the level should be increased or decreased
+                var rocketEffect = Math.random() < 0.5 ? 1 : -2;
+
+                // Update the form action and submit
+                document.getElementById('rocketEffect').value = rocketEffect;
+            } else {
+                // Disable Rocket Team button if Rocket effect is not applied
+                rocketButton.disabled = true;
+            }
+
+            // Submit the form
+            document.getElementById('catchForm').submit();
+        }
+
+        function useRocket() {
+            var rocketButton = document.getElementById('rocketButton');
+            var catchButton = document.querySelector('.catch-button');
+
+            // Submit the form
+            document.getElementById('rocketForm').submit();
+
+            rocketButton.disabled = true;
+            catchButton.disabled = false;
+        }
+
+        function transformPokemon() {
+            // Add logic for the evolution button
+            document.getElementById('transformForm').submit();
+        }
+
+        function showLeaderboard() {
+            document.getElementById('leaderboardContainer').style.display = 'block';
+        }
+
+        function finishGame() {
+            // Make an AJAX request to the Spring MVC endpoint
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/finishGame", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        // Handle the response if needed
+                        console.log("Game finished successfully!");
+                        var response = JSON.parse(xhr.responseText);
+
+                        // Redirect to the history page using the URL received in the response
+                        window.location.href = response.redirectUrl;
+                    } else {
+                        console.error("Error finishing the game");
+                    }
+                }
+            };
+
+            // Send an empty JSON payload (or customize payload as needed)
+            xhr.send(JSON.stringify({}));
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <h1>Pokemon Collection</h1>
+
+    <h2>User Pokemon:</h2>
+    <ul>
+        <li th:each="pokemon : ${userPokemon}">
+            <span th:text="${pokemon.name}"></span> - <span th:text="${pokemon.level}"></span>
+        </li>
+    </ul>
+
+    <h2>Server Pokemon:</h2>
+    <ul>
+        <li th:each="pokemon : ${serverPokemon}">
+            <span th:text="${pokemon.name}"></span> - <span th:text="${pokemon.level}"></span>
+        </li>
+    </ul>
+
+    <form id="catchForm" th:action="@{/catchPokemon}" method="post">
+        <button type="button" class="catch-button" th:onclick="catchPokemon()">Catch Pokemon</button>
+        <button class="rocket-button" onclick="useRocket()" id="rocketButton" th:classappend="${rocketButtonActivated ? 'active' : ''}">Rocket Team</button>
+        <button class="evolution-button" onclick="transformPokemon()">Evolve Pokemon</button>
+        <button class="finish-button" onclick="finishGame()">Finish Game</button>
+        <input type="hidden" id="rocketEffect" name="rocketEffect" value="0"/>
+    </form>
+
+    <button class="leader-button" onclick="showLeaderboard()">Leaderboard</button>
+
+    <h2 th:if="${leader != null}">Leader Pokemon:</h2>
+    <th:block th:if="${leader}">
+        <p th:text="'Leader: ' + ${leader.name} + ' - Level ' + ${leader.level}"
+           th:class="${leader.level > 5 ? 'leader-name' : ''}"></p>
+    </th:block>
+</div>
+
+<div id="leaderboardContainer" class="container leaderboard-container">
+    <h1>Pokemon Leaderboard</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Level</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pokemon : ${leaderPokemon}">
+            <td th:text="${pokemon.name}"></td>
+            <td th:text="${pokemon.level}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<form id="rocketForm" th:action="@{/rocket}" method="post" style="display: none;"></form>
+<form id="transformForm" th:action="@{/transformPokemon}" method="post" style="display: none;"></form>
+
+</body>
+</html>
+
+
+

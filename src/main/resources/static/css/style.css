@@ -1,0 +1,86 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #333;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.star {
+    margin-top: 10px;
+    width: 0;
+    height: 0;
+    position: relative;
+    border-right: 25px solid transparent;
+    border-bottom: 20px solid #f5cc34;
+    border-left: 25px solid transparent;
+    transform: rotate(35deg);
+}
+
+.star:before,
+.star:after {
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+.star:before {
+    top: -13px;
+    left: -16px;
+    border-bottom: 16px solid #f5cc34;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    transform: rotate(-35deg);
+}
+
+.star:after {
+    top: 1px;
+    left: -25px;
+    border-right: 25px solid transparent;
+    border-bottom: 20px solid #f5cc34;
+    border-left: 25px solid transparent;
+    transform: rotate(-70deg);
+}
+
+.leader-star {
+    margin-top: -30px;
+    color: #E7337A;
+}
+
+.leader-button {
+    background-color: #FFD700;
+    margin-top: 10px;
+    color: #333;
+}
+
