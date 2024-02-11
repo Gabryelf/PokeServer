@@ -19,10 +19,10 @@ public class GameController {
     @PostMapping("/finishGame")
     public ResponseEntity<Map<String, String>> finishGame() {
         try {
-            // Perform the logic to save game history or other actions
+
             HistoricalResult historicalResult = gameService.endGameAndSaveHistory();
 
-            // Build the response with the redirect URL
+
             Map<String, String> response = new HashMap<>();
             response.put("redirectUrl", "/history.html");
 

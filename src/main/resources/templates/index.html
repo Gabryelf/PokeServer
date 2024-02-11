@@ -18,8 +18,8 @@
             background-color: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 10px;
-            margin: 20px auto; /* Center the container */
-            max-width: 600px; /* Limit the width for better readability */
+            margin: 20px auto;
+            max-width: 600px;
         }
 
         .catch-button[disabled], .rocket-button[disabled] {
@@ -56,19 +56,19 @@
             var rocketButton = document.getElementById('rocketButton');
             var catchButton = document.querySelector('.catch-button');
 
-            // Randomly decide if Rocket effect should be applied
+
             if (Math.floor(Math.random() * 3) === 0) {
                 // Randomly decide if the level should be increased or decreased
                 var rocketEffect = Math.random() < 0.5 ? 1 : -2;
 
-                // Update the form action and submit
+
                 document.getElementById('rocketEffect').value = rocketEffect;
             } else {
-                // Disable Rocket Team button if Rocket effect is not applied
+
                 rocketButton.disabled = true;
             }
 
-            // Submit the form
+
             document.getElementById('catchForm').submit();
         }
 
@@ -76,7 +76,7 @@
             var rocketButton = document.getElementById('rocketButton');
             var catchButton = document.querySelector('.catch-button');
 
-            // Submit the form
+
             document.getElementById('rocketForm').submit();
 
             rocketButton.disabled = true;
@@ -84,7 +84,7 @@
         }
 
         function transformPokemon() {
-            // Add logic for the evolution button
+
             document.getElementById('transformForm').submit();
         }
 
@@ -93,7 +93,7 @@
         }
 
         function finishGame() {
-            // Make an AJAX request to the Spring MVC endpoint
+
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "/finishGame", true);
             xhr.setRequestHeader("Content-Type", "application/json");
@@ -101,11 +101,11 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
-                        // Handle the response if needed
+
                         console.log("Game finished successfully!");
                         var response = JSON.parse(xhr.responseText);
 
-                        // Redirect to the history page using the URL received in the response
+
                         window.location.href = response.redirectUrl;
                     } else {
                         console.error("Error finishing the game");
@@ -113,7 +113,7 @@
                 }
             };
 
-            // Send an empty JSON payload (or customize payload as needed)
+
             xhr.send(JSON.stringify({}));
         }
     </script>
